@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+	<channel>
+		<title>Michael Bissell Talks About Tech (and stuff)</title>
+		<link>https://michaelbissell.com</link>
+		<language>en-us</language>
+		<itunes:subtitle>A bit about tech and culture</itunes:subtitle>
+		<itunes:author>Michael Bissell</itunes:author>
+		<itunes:summary>I've been in "tech" a long time, and I've come to the conlusion that tech is just whatever tool humans are fascinated with currently, whether it's migrating computer service to the cloud, or whacking an atelope with a femur bone -- it's all about making life, if not easier, at least a bit more interesting.</itunes:summary>
+		<description>I've been in "tech" a long time, and I've come to the conlusion that tech is just whatever tool humans are fascinated with currently, whether it's migrating computer service to the cloud, or whacking an atelope with a femur bone -- it's all about making life, if not easier, at least a bit more interesting.</description>
+		<itunes:owner>
+			<itunes:name>Michael Bissell</itunes:name>
+			<itunes:email>bissellator@gmail.com</itunes:email>
+		</itunes:owner>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:image href="https://michaelbissell.com/images/bissellator-big.jpg" />
+		<itunes:category text="Technology"></itunes:category>
+fITEMS
+	</channel>
+</rss>

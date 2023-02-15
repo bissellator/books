@@ -1,0 +1,49 @@
+<div id="postform"></div>
+<form id="form-fqhHQldiNE1FcjhsZXFwc01kbHg1ZmJHa3RQbmE3">
+  <B>Add a  new page</b>
+    <table border="0">
+        <tbody>
+        <tr style="width:20%"><td>Title:</td><td><input type="text" id="pagesname" style="width:100%"></td></tr>
+        <tr><td>Page Body Text: </td><td><textarea class="editor" id="pagesbody" style="display: none;"></textarea></td></tr>
+        <tr><td>Blurb<br />(this is used for<Br />social media headers)</td><td><textarea class="uxapi-text" id="blurb"></textarea></td></tr>
+        <tr>
+          <td>Social Image<br />This makes sure your page is shared with the right image</td>
+          <td>
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAQAIBRAA7" class="uxapi-image" id="socialimage.form-fqhHQldiNE1FcjhsZXFwc01kbHg1ZmJHa3RQbmE3"><br>
+            <input type="file" onchange="encodeImageFileAsBase64(this, 'form-fqhHQldiNE1FcjhsZXFwc01kbHg1ZmJHa3RQbmE3', 'socialimage')">
+            <textarea id="socialimage" style="visibility:hidden !important; height:0px;width:0px;" hidden=""></textarea>
+          </td>
+        </tr>
+        <tr><td>tags</td><td><textarea class="uxapi-text" id="tags"></textarea></td></tr>
+        <tr><td>category</td>
+                <td><select class="uxapi-dropdown" id="category"><option value="undefined">undefined</option><option value="page">page</option><option value="blogs">blogs</option><option value="books">books</option><option value="short stories">short stories</option><option value="home">home</option><option value=""></option></select></td></tr>
+        <tr><td>template</td>
+                <td><select class="uxapi-dropdown" id="template"><option value="undefined">undefined</option><option value="tiles">tiles</option><option value="article">article</option><option value="blurbs">blurbs</option></select></td></tr>
+    </tbody></table>
+    <p style="	cursor: pointer;border: 1px solid;padding: 10px; box-shadow: 5px 10px #888888;width:100px" onclick="saveObject('fqhHQldiNE1FcjhsZXFwc01kbHg1ZmJHa3RQbmE3', '/v1/pages', 'POST')" value="Post New">Post New</p>
+    </form>
+
+<script>
+  var params = {}
+  var urlParams = new URLSearchParams(location.search);
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  refreshToken()
+
+  function formRender(formatstr) {
+    var ele = document.getElementsByClassName('editor');
+    for (var i=0; i< ele.length; i++ ) {
+      ckEditor(ele[i].id);
+    }
+  }
+
+  formRender()
+
+  function postObjectCleanup(path, text) {
+    console.log(path,text)
+    text = JSON.parse(text)
+    location.href='/admin/editpage.html?objectID=' + text.objectID
+  }
+
+</script>

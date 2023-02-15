@@ -1,0 +1,26 @@
+<span class="buttonput clickable" onclick="formRender('raw')">raw</span>
+<span class="buttonput clickable" onclick="formRender()">formatted</span>
+<div id="editform"></div>
+<script>
+var params = {}
+var urlParams = new URLSearchParams(location.search);
+for (const [key, value] of urlParams) {
+  params[key] = value;
+}
+
+  function formRender(formatstr) {
+    if (typeof(formatstr) == 'undefined') {formatstr = {}}
+    document.getElementById("editform").innerHTML = (editObject('/v1/pages/' + params.objectID, formatstr))
+
+    var ele = document.getElementsByClassName('editor');
+    for (var i=0; i< ele.length; i++ ) {
+      ckEditor(ele[i].id);
+    }
+
+    function  postObjectCleanup(path, text) {
+      console.log(path, text)
+    }
+  }
+
+  formRender()
+</script>

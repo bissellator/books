@@ -1,0 +1,29 @@
+<div id="postform"></div>
+
+<script>
+  refreshToken()
+
+  var params = {}
+  var urlParams = new URLSearchParams(location.search);
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  refreshToken()
+
+  function formRender(formatstr) {
+    document.getElementById("postform").innerHTML = (postObjectForm('/v1/templates'))
+    var ele = document.getElementsByClassName('editor');
+    for (var i=0; i< ele.length; i++ ) {
+      ckEditor(ele[i].id);
+    }
+  }
+
+  formRender()
+
+  function postObjectCleanup(path, text) {
+    console.log(path,text)
+    text = JSON.parse(text)
+    location.href='/admin/edittemplate.html?objectID=' + text.objectID
+  }
+
+</script>

@@ -1,0 +1,12 @@
+            <item>
+              <title>fSITENAME fPAGESNAME</title>
+              <itunes:summary>fBLURB</itunes:summary>
+              <description>fBLURB</description>
+              <link>fOBJECTID</link>
+              <enclosure url="fPODCAST" type="audio/mpeg" length="fFILESIZE"></enclosure>
+              <pubDate>fPUBDATE</pubDate>
+              <itunes:author>Michael Bissell</itunes:author>
+              <itunes:duration>fDURATION</itunes:duration>
+              <itunes:explicit>no</itunes:explicit>
+              <guid>fOBJECTID</guid>
+            </item>

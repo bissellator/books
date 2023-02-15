@@ -1,0 +1,22 @@
+<script>
+  var testme = refreshToken()
+  if (testme.length > 2) {
+    document.write(testme)
+  }
+  else {
+  var params = {}
+  var urlParams = new URLSearchParams(location.search);
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  document.write(editObject('/v1/categories/' + params.objectID))
+    var ele = document.getElementsByClassName('editor');
+    for (var i=0; i< ele.length; i++ ) {
+      ckEditor(ele[i].id);
+    }
+  }
+
+  function  postObjectCleanup(path, text) {
+    alert("Saved Section Details")
+  }
+</script>

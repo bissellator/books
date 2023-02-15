@@ -1,0 +1,106 @@
+<h2 class="custom_heading">Hello!</h2>
+      <div id=resetpassword></div>
+      <p>
+        <a href="/admin">Admin Tools</a>
+      </p>
+<script>
+function profile() {
+  var token = window.sessionStorage.token
+  if (typeof(token) == 'undefined') {window.location.href = '/login.html'}
+  var jwtels = token.split('.');
+  var userstuff = JSON.parse(atob(jwtels[1]))
+  var usersId = userstuff.sub
+  var path = uxapihost + '/v1/uxapi/users/' + usersId
+  var response = $.ajax({
+    url: path,
+    async: false,
+    type:'GET',
+    dataType: 'json',
+    contentType: 'application/json',
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer "+ token)
+    },
+    success: function(text){
+			  if(typeof(text.error) != 'undefined') {
+          console.log("error", text)
+					document.getElementById("resetpassword").innerHTML = "<p style='color: #ff0000'>" + text.error + "</p>"
+				}
+				else {
+          var msg = "<p>This will allow you to reset the password for " + text.object.name + " (" + text.object.email + ")</p>"
+          msg = msg + `<input type=text id=profilename placeholder="profile name" value="` + text.object.name + `"><Br />`
+          msg = msg + `<input type=text readonly id=emailaddr value="` + text.object.email + `"><Br />`
+          msg = msg + `<input type=password id=newpass placeholder="newpassword" onchange="validatePassword(this.value)"><Br />`
+          msg = msg +  `<input type=submit value="Update Password" onclick="updateProfile()"><Br />`
+          document.getElementById("resetpassword").innerHTML = msg
+				}
+    },
+    error: function(err) {
+        console.log(err)
+    }
+	});
+}
+
+function updateProfile() {
+  var token = window.sessionStorage.token
+  var jwtels = token.split('.');
+  var userstuff = JSON.parse(atob(jwtels[1]))
+  var path = uxapihost + '/v1/uxapi/users/' + userstuff.sub
+  var payload = {}
+  payload.password = document.getElementById("newpass").value
+  var checkpassw = validatePassword(payload.password)
+  if (checkpassw == false) {
+    alert("Please enter a password in a valid format to continue")
+    return
+  }
+  payload.name = document.getElementById("profilename").value
+  payload.email = document.getElementById("emailaddr").value
+  payload = JSON.stringify(payload)
+  var response = $.ajax({
+    url: path,
+    async: false,
+    type:'PUT',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: payload,
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer "+ token)
+    },
+    success: function(text){
+        if(typeof(text.error) != 'undefined') {
+          console.log("error", text)
+          document.getElementById("resetpassword").innerHTML = "<p style='color: #ff0000'>" + text.error + "</p>"
+        }
+        else {
+          alert("your password has been updated")
+          profile()
+        }
+    },
+    error: function(err) {
+        console.log(err)
+    }
+  });
+}
+
+function validateEmail(email) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return (true)
+  }
+  else {
+    alert("Please enter a valid email address")
+    return (false)
+  }
+}
+
+function validatePassword(mypass) {
+  if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(mypass)) {
+    return (true)
+  }
+  else {
+    alert("Password must be 8-16 characters long, have a digit 1 to 9, one lowercase letter, one uppercase letter and one special character with no spaces")
+    return (false);
+  }
+}
+
+
+profile()
+</script>

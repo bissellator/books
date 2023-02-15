@@ -1,0 +1,56 @@
+<script>
+  var params = {}
+  var urlParams = new URLSearchParams(location.search);
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  var catname = params.catname
+</script>
+<h1>Add a new <script>document.write(catname)</script> Page</h1>
+<form id="form-MWhqUnpKNUhwWHd3WlRzOFVTZmZqajhjdTZMWFlj">
+  <table border="0" cellpadding=10><tbody>
+    <tr>
+      <td style="width:25%" width="20%"><B>Title</B></td><td><input type=text style="width:80%" id="title"></td>
+    </tr>
+    <tr>
+      <td valign=top><B>Image</b><br /><span sstyle="font-size:smaller">This is used for social media shares and as a thumbnail.  Depending on your template it may (or may not) display on your page</span>.</td><td>
+            <img style="max-height:400px" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAQAIBRAA7" class="uxapi-image" id="socialimage.form-MWhqUnpKNUhwWHd3WlRzOFVTZmZqajhjdTZMWFlj"><br>
+            <input type="file" onchange="encodeImageFileAsBase64(this, 'form-MWhqUnpKNUhwWHd3WlRzOFVTZmZqajhjdTZMWFlj', 'socialimage')">
+            <textarea id="socialimage" style="visibility:hidden !important; height:0px;width:0px;" hidden=""></textarea>
+            </td>
+    </tr>
+    <tr>
+      <td valign=top><b>Page content</b><br /><span style="font-size:smaller">The actual article to show on your site.  You can paste images, link videos and format your text with the toolbar</span></td>
+      <td><textarea class="editor" id="content" style="display: none;"></textarea></td>
+    </tr>
+    <tr>
+      <td><B>Blurb</B><BR /><span style="font-size:smaller">This is used on navigation on your site and also as short text that will be used by social media when your page is shared</span></td><td><textarea class="uxapi-text" id="blurb"></textarea></td>
+    </tr>
+    <tr>
+      <td>published</td>
+      <td><select class="uxapi-radio" id="published"><option value="true" selected>yes</option><option value="false">no</option></select></td>
+    </tr>
+  </tbody></table>
+  <input type="hidden" id="template">
+<p style="	cursor: pointer;border: 1px solid;padding: 10px; box-shadow: 5px 10px #888888;width:100px" onclick="saveObject('MWhqUnpKNUhwWHd3WlRzOFVTZmZqajhjdTZMWFlj', '/v1/categories/e9785960-a897-11ed-bc5e-294749541b10/articles', 'POST')" value="Post New">Post New</p></form>
+<script>
+  msg = `<div id="MWhqUnpKNUhwWHd3WlRzOFVTZmZqajhjdTZMWFlj" style="visibility:hidden;height:0px">hi</div>`
+  document.write(msg)
+  refreshToken()
+
+  function formRender(formatstr) {
+//    document.getElementById("postform").innerHTML = (postObjectForm('/v1/categories/' + params["categoriesId"] + '/articles'))
+    var ele = document.getElementsByClassName('editor');
+    for (var i=0; i< ele.length; i++ ) {
+      ckEditor(ele[i].id);
+    }
+  }
+
+  formRender()
+
+  function postObjectCleanup(path, text) {
+    console.log(path,text)
+    window.location.href='/admin/editarticle.html?categoryId=' + params.categoriesId   + '&objectID=' + text.objectID
+  }
+
+</script>

@@ -1,0 +1,28 @@
+<h1>Manage Templates</h1>
+<p>
+  Templates are snippets of HTML that we use to display your content. If you
+  understand how code HTML, this allows you to change the look and feel of your
+  content on different pages by using different templates.  If you don't understand
+  HTML, be careful...
+</p>
+
+<script>
+  var testme = refreshToken()
+  if (testme.length > 2) {
+    document.write(testme)
+  }
+  else {
+    document.write(listObjects('/v1/templates', {
+      title: "templatesname",
+      blurb: '',
+      img: '',
+      link: '/admin/edittemplate.html?objectID={objectID}'
+     }, 'list')
+    )
+    document.write(`
+      <p>
+        <a href='./addtemplate.html'>Add a new template to your site</A>
+      </p>
+    `)
+  }
+</script>

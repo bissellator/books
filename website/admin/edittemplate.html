@@ -1,0 +1,17 @@
+<script>
+var params = {}
+var urlParams = new URLSearchParams(location.search);
+for (const [key, value] of urlParams) {
+  params[key] = value;
+}
+document.write(editObject('/v1/templates/' + params.objectID))
+
+  var ele = document.getElementsByClassName('editor');
+  for (var i=0; i< ele.length; i++ ) {
+    ckEditor(ele[i].id);
+  }
+
+  function  postObjectCleanup(path, text) {
+    console.log(path, text)
+  }
+</script>

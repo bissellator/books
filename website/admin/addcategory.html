@@ -1,0 +1,63 @@
+<h1>Add a new Category</h1>
+<p>
+  Categories are the primary pages of your website and will appear in the menu and are
+  a way to group posts like blogs or articles which will be listed on the category page.
+</p>
+
+<form id="form-YkhaVzRwVmtRc1h1bXo3YjZ3bFloTHQwZjlGVGVL">
+<table border="0" cellpadding=3><tbody>
+  <tr>
+    <td style="width:25%" width="25%"><b>Page Title</b></td>
+    <td><input type=text id="title" style="width:100%"></td>
+  </tr>
+  <tr>
+    <td><b>Menu Name:</b><br/><span style="font-size:smaller">This is what will show on the menu, it can be the same as the tile or not</span></td>
+    <td valign=top><input type=text style="width:100%" id="menuname"></td>
+  </tr>
+  <tr>
+    <td width="20%" valign=top><b>Content</B><br /><span style="font-size:smaller">This text will appear on the page to describe the links to articles</span></td><td><textarea class="editor" id="content" style="display: none;"></textarea></td>
+  </tr>
+  <tr>
+    <td><b>Blurb:</B><br /><span style="font-size:smaller">This is a short description of your page used on social media posts</span></td><td><textarea class="uxapi-text" id="blurb"></textarea></td>
+  </tr>
+  <tr>
+    <td valign=top><b>Image</b></td><td>
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAQAIBRAA7" class="uxapi-image" style="max-height:200px" id="socialimage.form-YkhaVzRwVmtRc1h1bXo3YjZ3bFloTHQwZjlGVGVL"><br>
+            <input type="file" onchange="encodeImageFileAsBase64(this, 'form-YkhaVzRwVmtRc1h1bXo3YjZ3bFloTHQwZjlGVGVL', 'socialimage')">
+            <textarea id="socialimage" style="visibility:hidden !important; height:0px;width:0px;" hidden=""></textarea>
+            </td>
+  </tr>
+  <tr><td>published</td>
+            <td><select class="uxapi-radio" id="published"><option value="undefined">undefined</option><option value="true">true</option><option value="false">false</option></select></td>
+  </tr>
+  <tr>
+    <td>template</td><td><textarea class="uxapi-text" id="template"></textarea></td>
+  </tr>
+  <tr>
+    <td>rank</td><td><textarea class="uxapi-text" id="rank"></textarea></td>
+  </tr>
+</tbody></table>
+
+<p style="cursor: pointer;border: 1px solid;padding: 10px; box-shadow: 5px 10px #888888;width:100px" onclick="saveObject('YkhaVzRwVmtRc1h1bXo3YjZ3bFloTHQwZjlGVGVL', '/v1/categories', 'POST')" value="Post New">Post New</p>
+
+<script>
+function formRender() {
+  var ele = document.getElementsByClassName('editor');
+  for (var i=0; i< ele.length; i++ ) {
+    ckEditor(ele[i].id);
+  }
+}
+
+formRender()
+
+function postObjectCleanup(path, text) {
+  console.log(path,text)
+  $.ajax("/HUP", {
+    success: function(response) {
+      $("#content2").html(response);
+      window.location.href='/admin/viewcategory.html?objectID=' + text.objectID
+    }
+  });
+}
+
+</script>

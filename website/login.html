@@ -1,0 +1,106 @@
+
+<div id="loginbox"><p>Loading... <img src=https://uxapi.io/images/spinner.gif width=20 height=20></p></div>
+
+<script>
+  window.sessionStorage.removeItem('contract')
+  window.sessionStorage.removeItem('token')
+  window.sessionStorage.removeItem('refresh')
+  var params = {}
+  var urlParams = new URLSearchParams(location.search);
+  for (const [key, value] of urlParams) {
+    params[key] = value;
+  }
+  if (typeof(params.code) == 'undefined') {
+    try {$.get(uxapihost + '/v1/uxapi/auth/login.html?client_id=' + clientID + '&redirect_uri=' + window.location.href,function(response){
+      document.getElementById("loginbox").innerHTML = response;
+    })}catch(err) {console.log(err)}
+  }
+  else {
+    var payload = "grant_type=authorization_code&code=" + params.code
+    $.ajax({
+      url: uxapihost + '/v1/uxapi/tokens/create',
+      async: true,
+      type:'POST',
+      dataType: 'text',
+      data: payload,
+      contentType: 'x-www-form-urlencoded',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Basic "+ btoa(clientID + ':' + clientSecret));
+      },
+      success: function(text){
+        try{
+          var json = JSON.parse(text)
+          if (typeof(json.access_token) != 'undefined') {
+            window.sessionStorage.token = json.access_token
+            window.sessionStorage.refresh = json.refresh_token
+            window.location.href = '/admin/index.html'
+          }
+        }catch {
+          console.log(text)
+          var msg = `Something went wrong, please <a href=./login.html>try logging in again</a>`
+          document.getElementById("loginbox").innerHTML = msg
+        }
+        return;
+      },
+      error: function(err) {
+        var msg = `Something went wrong, please <a href=./login.html>try logging in again</a>`
+        document.getElementById("loginbox").innerHTML = msg
+        console.log(err)
+        return;
+      }
+    });
+  }
+  function validateEmail(email) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return (true)
+    }
+    else {
+      alert("Please enter a valid email address")
+      return (false)
+    }
+  }
+
+  function login(username, password, redir) {
+    username = username.toLowerCase()
+  	var response = $.ajax({
+      url: uxapihost + '/v1/uxapi/tokens/create',
+      async: false,
+      type:'GET',
+      dataType: 'json',
+      contentType: 'application/json',
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Basic "+btoa(username+':'+password));
+      },
+      success: function(text){
+  			  if(typeof(text.error) != 'undefined') {
+            console.log("error", text)
+  					document.getElementById("loginmsg").innerHTML = "<p style='color: #ff0000'>" + text.error + "</p>"
+  				}
+  				else {
+            window.sessionStorage.token = text.access_token
+            window.sessionStorage.refresh = text.refresh_token
+            return
+  				}
+      },
+      error: function(err) {
+          console.log(err)
+      }
+  	});
+  }
+
+  var resetForm=`
+  <h3>Reset Password</h3>
+<p>Please enter your email address you registered with:</p>
+<input type=text id="userid" placehoder="you@example.com" onchange='this.value=this.value.toLowerCase();validateEmail(this.value)'><br />
+<div class="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center" >
+  <a href=# onclick="generateCode('loginbox')">
+    Send Code!
+  </a>
+  <div id=loginmsg></div>
+</div>
+`
+</script>
+
+<p onclick="document.getElementById('loginbox').innerHTML = resetForm" class="clickable">
+  <b>Forgot password?</B> Click here to reset
+</p>

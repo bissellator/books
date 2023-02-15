@@ -1,0 +1,113 @@
+.buttonget {
+	background: #61affe;
+	padding: 3px;
+	color: #ffffff;
+	font-weight: bold;
+	font-family: sans-serif;
+	line-height:18pt;
+}
+
+.buttonpost {
+	background: #49cc90;
+	padding: 3px;
+	color: #ffffff;
+	font-weight: bold;
+	font-family: sans-serif;
+	line-height: 18pt;
+}
+.buttonput {
+	background: #fca130;
+	padding: 3px;
+	color: #ffffff;
+	font-weight: bold;
+	font-family: sans-serif;
+	line-height: 18pt;
+}
+
+.buttondelete {
+	background: #f93e3e;
+	padding: 3px;
+	color: #ffffff;
+	font-weight: bold;
+	font-family: sans-serif;
+	line-height:18pt;
+}
+
+.codeblock {
+  font-family: 'Lucida', monospace;
+  font-size: 80%;
+  padding:10px;
+  color: #00A800;
+  background-color: #333;
+  white-space: pre-wrap;
+}
+
+.hidden {
+	visibility:hidden;
+	height: 0px
+}
+
+.uxapi-image-thumb {
+	width:50%;
+}
+
+.uxapi-text {
+    box-shadow: none;
+		width:80%;
+		height:100px;
+		resize:both;
+}
+
+.uxapi-textarea {
+	width:80%;
+	height:100px;
+	resize:both;
+
+}
+
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.uxapigridcontainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: #ffffff;
+  padding: 10px;
+}
+.uxapigriditem {
+  // background-color: rgba(255, 255, 255, 0.8);
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 5px;
+  // font-size: 30px;
+  text-align: center;
+}
+
+@media only screen and (max-width : 500px) and (min-width: 1px) {
+   /* Smartphone view: 1 tile */
+   .uxapigridcontainer {
+		 grid-template-columns: auto;
+   }
+}
+@media only screen and (max-width : 800px) and (min-width : 501px) {
+   /* Tablet view: 2 tiles */
+	 .uxapigridcontainer {
+		 grid-template-columns: auto;
+   }
+}
+@media only screen and (max-width : 1050px) and (min-width : 801px) {
+   /* Small desktop / ipad view: 3 tiles */
+	 .uxapigridcontainer {
+		 grid-template-columns: auto auto auto;
+   }
+}
+@media only screen and (max-width : 1290px) and (min-width : 1051px) {
+   /* Medium desktop: 4 tiles */
+	 .uxapigridcontainer {
+		 grid-template-columns: auto auto auto auto;
+   }
+}

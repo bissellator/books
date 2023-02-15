@@ -1,0 +1,47 @@
+
+<h1>Podcasts</h1>
+<p>A simple web player for my podcasts</p>
+
+<div id="player" style="width:300px;float:center;background-color:#aaa;border-radius: 10%;  display: block;margin-left: auto;  margin-right: auto;"></div>
+<hr />
+<div id="playlist"></div>
+<script>
+  var player = `
+    <img src="fIMG" style="width:300px;float:center;border-radius: 10%;"><Br />
+    <audio controls>
+    <source src="fPODCAST" type="audio/mpeg">
+      Sorry about that -- I'm using the HTML &lt;audio&gt; tag which is only supported on newer browsers...
+    </audio><br/>
+    <span style="text-align:center;margin-left:10px;margin-right:10px; width:100%"><center><B>fBLURB<B></center></span>
+  `
+  var podcasts = returnObj('/v1/pages?podcast=http*&sortBy=posted&sortOrder=desc')
+  if (typeof(podcasts.objects) != 'undefined') {
+    var msg = ""
+    for (var i=0; i< podcasts.objects.length; i++) {
+      msg = msg + `<span class="clickable" onclick="playTrack({ podcast: '` + podcasts.objects[i].object.podcast + `', art: '/images/library/` + podcasts.objects[i].objectID + `', title: '`+ podcasts.objects[i].object.pagesname + `', autoplay: 'yes'})"><B>` + podcasts.objects[i].object.pagesname + `</B> (`+ podcasts.objects[i].object.podcastduration + `)<br>` + podcasts.objects[i].object.blurb + `</span><hr/>`
+    }
+    document.getElementById("playlist").innerHTML = msg
+    playTrack({ podcast: podcasts.objects[0].object.podcast, art: '/images/library/' + podcasts.objects[0].objectID, title: podcasts.objects[0].object.pagesname, autoplay: "no" })
+  }
+
+  function playTrack(audioObj) {
+    var playme = player
+    if (typeof(audioObj.autoplay) != 'undefined') {
+      if (audioObj.autoplay == 'yes') {
+        playme = playme.replace(/audio controls/, "audio controls autoplay")
+      }
+    }
+    playme = playme.replace(/fIMG/g, audioObj.art)
+    playme = playme.replace(/fPODCAST/g, audioObj.podcast)
+    playme = playme.replace(/fBLURB/g, audioObj.title)
+    document.getElementById("player").innerHTML = playme
+  }
+
+</script>
+<center>
+  <a href="https://open.spotify.com/show/0oJ3gRYyEVYDQ6YdxzKXOr" target="_blank"><img style="height:40px" src="/images/spotify.webp" border=0/></a>
+  <a href="https://podcasts.google.com/feed/aHR0cHM6Ly9taWNoYWVsYmlzc2VsbC5jb20vcG9kY2FzdC5yc3M" target="_blank"><img style="height:40px" src="/images/google-podcast-badge.png" border=0/></a>
+  <a href="https://music.amazon.com/podcasts/8da9210c-0010-4006-b0ef-57bcef04d9db/michael-bissell-talks-about-tech-and-stuff" target="_blank"><img style="height:40px" src="/images/amazon-music-badge.webp" border=0/></a>
+  <a href="https://tunein.com/podcasts/Technology-Podcasts/Michael-Bissell-Talks-About-Tech-and-stuff-p3089838/" target="_blank"><img style="height:40px" src="/images/tunein-badge.png" border=0/></a>
+  <a href="/podcast.rss" target="_blank"><img style="height:40px" src="/images/podcast-rss-badge.png" border=0/></a>
+</center>
