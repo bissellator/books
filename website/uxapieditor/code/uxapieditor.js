@@ -78,7 +78,6 @@ function listObjects(path, listOptions, format) {
 
     var divhead  = `<div class="uxapigridcontainer">`
     if (format == 'tiles') {
-
       if (typeof(obj.object) != 'undefined') {
         msg = msg + divhead
         msg = msg + renderTile(obj, listOptions)
@@ -86,14 +85,24 @@ function listObjects(path, listOptions, format) {
       else {
         msg = msg + divhead
         for (var i = 0; i < obj.objects.length; i++) {
-//          if (parseInt((i+1)/4) == ((i)/4) && i > 0) {
-//              console.log(parseInt(i/4) +" "+ (i/4))
-//              msg = msg + "</div>" + divhead
-//            }
             msg = msg + renderTile(obj.objects[i], listOptions)
           }
         }
       msg = msg + "</div>"
+    }
+    else if (format == 'buttons') {
+      if (typeof(obj.object) != 'undefined') {
+        msg = msg + divhead
+        msg = msg + renderButton(obj, listOptions)
+      }
+      else {
+        msg = msg + divhead
+        for (var i = 0; i < obj.objects.length; i++) {
+            msg = msg + renderButton(obj.objects[i], listOptions)
+          }
+        }
+      msg = msg + "</div>"
+
     }
     else {
       if (typeof(obj.object) != 'undefined') {
@@ -808,6 +817,33 @@ function renderTile(obj, listOptions) {
   tmp = tmp.replace(/fTILEBLURB/g, obj.object[listOptions.blurb])
   tmp = tmp.replace(/fTILEIMAGE/g, obj.object[listOptions.img])
   tmp = tmp.replace(/fIMAGESTYLE/g, imagestyle)
+  tmp = tmp.replace(/fTILETARGET/g, link)
+  msg = msg + tmp
+  return msg
+}
+
+function renderButton(obj, listOptions) {
+  var msg = ''
+  var imagestyle = ""
+  var buttonTemplate = `
+  <div class="uxapibuttonitem clickable" onclick="location.href='fTILETARGET'">
+      <span class="uxapibutton-inner" />fTILETITLE<span>
+  </div>
+  `
+
+  var tmp = buttonTemplate;
+  var link = listOptions.link
+  for (const [key, value] of Object.entries(obj.object)) {
+    var rE = '{' + key + '}'
+    var rE2 = new RegExp(rE, 'g')
+    link = link.replace(rE2, value)
+  }
+  if (link.includes('{objectID}') == true) {
+    var rE = '{objectID}'
+    var rE2 = new RegExp(rE, 'g')
+    link = link.replace(rE2, obj.objectID)
+  }
+  tmp = tmp.replace(/fTILETITLE/g, obj.object[listOptions.title])
   tmp = tmp.replace(/fTILETARGET/g, link)
   msg = msg + tmp
   return msg
